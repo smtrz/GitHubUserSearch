@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), RVClickCallback, View.OnClickListener, callData {
     lateinit var mainactVm: MainActivityViewModel
     lateinit var userAdapter: AppartmentsAdapter
-    val appartments: MutableList<Item> = mutableListOf()
+    val users: MutableList<Item> = mutableListOf()
     private val RECORD_REQUEST_CODE = 101
     var LAUNCH_SCAN_ACTIVITY = 1
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), RVClickCallback, View.OnClickListener,
         scan.setOnClickListener(this)
 
 
-        setupApptList(appartments)
+        setupApptList(users)
         subscribeObservers()
     }
 
@@ -72,8 +72,8 @@ class MainActivity : AppCompatActivity(), RVClickCallback, View.OnClickListener,
                 is DataState.Success<List<Item>> -> {
                     displayProgressBar(false)
                     //appartments
-                    appartments.addAll(dataState.data)
-                    userAdapter.loadItems(appartments, this)
+                    users.addAll(dataState.data)
+                    userAdapter.loadItems(users, this)
                     userAdapter.notifyDataSetChanged()
 
 
@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity(), RVClickCallback, View.OnClickListener,
                 et_username.setText(result)
 
                 pageNumber = 1
-                appartments.clear()
+                users.clear()
                 mainactVm.setStateEvent(
                     SubmitStatus.Search,
                     pageNumber, et_username.text.toString()
@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity(), RVClickCallback, View.OnClickListener,
                 // performing search operation.
 
                 pageNumber = 1
-                appartments.clear()
+                users.clear()
                 mainactVm.setStateEvent(
                     SubmitStatus.Search,
                     pageNumber, et_username.text.toString()
@@ -270,7 +270,7 @@ class MainActivity : AppCompatActivity(), RVClickCallback, View.OnClickListener,
     }
 
     override fun onItemClick(pos: Int) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(appartments.get(pos).html_url))
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(users.get(pos).html_url))
         startActivity(browserIntent)
     }
 
